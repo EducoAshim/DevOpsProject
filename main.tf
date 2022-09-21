@@ -103,7 +103,7 @@ provisioner "remote-exec"  {
     }
  connection {
     type         = "ssh"
-    host         = ${self.private_ip}   
+    host         = ["${self.private_ip}"]  
     user         = "ec2-user"
     private_key  = file("aws_key.pem" )
    }
