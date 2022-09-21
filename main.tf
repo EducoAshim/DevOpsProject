@@ -9,7 +9,9 @@ resource "aws_vpc" "terravpc" {
   enable_dns_hostnames = "true"
   enable_classiclink   = "false"
   instance_tenancy     = "default"
-  name        = "terravpc"
+  tags= {
+    Name = var.tag_name
+  }
 }
 
 
@@ -19,7 +21,9 @@ resource "aws_subnet" "terra-subnet-public-1" {
   cidr_block              = "10.0.1.0/24"
   map_public_ip_on_launch = "true" // Makes this a public subnet
   availability_zone       = "us-west-2a"
-  name        = "terrasubnet"
+  tags= {
+    Name = var.tag_name
+  }
 }
 
 // Create internet Gateway
@@ -32,7 +36,9 @@ resource "aws_security_group" "http-ssh-allowed" {
 vpc_id = aws_vpc.terravpc.id
 name        = var.security_group
 description = "security group for Ec2 instance"
-
+tags= {
+    Name = var.tag_name
+  }
 egress {
     from_port   = 0
     to_port     = 0
