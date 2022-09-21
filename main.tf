@@ -52,18 +52,18 @@ ingress {
 }
 
 # Create key pair
-resource "aws_key_pair" "aws-key" {
-  key_name   = "aws-key"
-  public_key = file(var.PUBLIC_KEY_PATH)
-}
+#resource "aws_key_pair" "aws-key" {
+#  key_name   = "aws-key"
+#  public_key = file(var.PUBLIC_KEY_PATH)
+#}
 
 # Create AWS ec2 instance
 resource "aws_instance" "TerraEc2" {
   ami           = var.ami_id
-  key_name = aws_key_pair.aws-key.id
+  key_name = "Ec2-Jenkins-linux"
   instance_type = var.instance_type
   subnet_id = aws_subnet.terra-subnet-public-1.id
-  vpc_security_group_ids = ["${aws_security_group.http-ssh-allowed.id}"]
+  #vpc_security_group_ids = ["${aws_security_group.http-ssh-allowed.id}"]
   tags= {
     Name = var.tag_name
   }
