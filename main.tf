@@ -96,11 +96,11 @@ resource "aws_instance" "TerraEc2" {
 }
 provisioner "remote-exec"  {
     inline  = [
-      "sudo yum install -y httpd.x86_64"
-      "sudo systemctl start httpd.service"
-      "sudo systemctl enable httpd.service"
-      "echo 'Installed by Terraform in $(hostname -f)' > /var/www/html/index.html"
-      "sudo pwd"
+      "sudo yum install -y httpd.x86_64",
+      "sudo systemctl start httpd.service",
+      "sudo systemctl enable httpd.service",
+      "echo 'Installed by Terraform in $(hostname -f)' > /var/www/html/index.html",
+      "sudo pwd",
       ]
    }
  connection {
