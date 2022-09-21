@@ -90,10 +90,8 @@ resource "aws_instance" "TerraEc2" {
   instance_type = var.instance_type
   subnet_id = aws_subnet.terra-subnet-public-1.id
   vpc_security_group_ids = ["${aws_security_group.http-ssh-allowed.id}"]
-  tags= {
-    Name = var.tag_name
-  }
-}
+  
+
 provisioner "remote-exec"  {
     inline  = [
       "sudo yum install -y httpd.x86_64",
