@@ -107,7 +107,8 @@ provisioner "remote-exec"  {
       "sudo yum install -y httpd.x86_64",
       "sudo systemctl start httpd.service",
       "sudo systemctl enable httpd.service",
-      "sudo echo 'Installed by Terraform' > /var/www/html/index.html",
+      "sudo su",
+      "sudo echo '<b>Installed by Terraform</b>' > /var/www/html/index.html",
       "sudo pwd",
       ]
     }
