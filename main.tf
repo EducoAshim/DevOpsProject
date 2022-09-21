@@ -99,13 +99,13 @@ provisioner "remote-exec"  {
       "sudo yum install -y httpd.x86_64"
       "sudo systemctl start httpd.service"
       "sudo systemctl enable httpd.service"
-      "echo “Installed by Terraform in $(hostname -f)” > /var/www/html/index.html"
-       "sudo pwd"
+      "echo 'Installed by Terraform in $(hostname -f)' > /var/www/html/index.html"
+      "sudo pwd"
       ]
    }
  connection {
     type         = "ssh"
-    host         = "${aws_instance.TerraEc2.public_ip}" }
+    host         = ["${aws_instance.TerraEc2.public_ip}"]
     user         = "ec2-user"
     private_key  = file("aws_key.pem" )
    }
