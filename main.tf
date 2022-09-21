@@ -26,6 +26,24 @@ resource "aws_subnet" "terra-subnet-public-1" {
   }
 }
 
+# Create route table
+resource "aws_route_table" "public-rt" {
+  vpc_id = aws_vpc.terravpc.id
+  route {
+    cidr_block = "0.0.0.0/0"   //associated subnet can reach everywhere
+    gateway_id = aws_internet_gateway.prod-igw.id //CRT uses this IGW to reach internet
+  }
+tags = {
+    Name = "public-rt"
+  }
+}
+# Route table association for the public subnets
+# Documentation is available here: https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route_table_association
+resource "aws_route_table_association" "rta-public-subnet-1" {
+  subnet_id      = aws_subnet.terra-subnet-public-1.id
+  route_table_id = aws_route_table.public-rt.id
+}
+
 // Create internet Gateway
 resource "aws_internet_gateway" "terravpc-igw" {
   vpc_id = aws_vpc.terravpc.id
