@@ -90,7 +90,10 @@ resource "aws_instance" "TerraEc2" {
   instance_type = var.instance_type
   subnet_id = aws_subnet.terra-subnet-public-1.id
   vpc_security_group_ids = ["${aws_security_group.http-ssh-allowed.id}"]
-  
+  tags= {
+      Name = var.tag_name
+     }
+  }
 
 provisioner "remote-exec"  {
     inline  = [
@@ -100,16 +103,12 @@ provisioner "remote-exec"  {
       "echo 'Installed by Terraform in $(hostname -f)' > /var/www/html/index.html",
       "sudo pwd",
       ]
-   }
+    }
  connection {
     type         = "ssh"
     host         = ["${aws_instance.TerraEc2.public_ip}"]
     user         = "ec2-user"
     private_key  = file("aws_key.pem" )
    }
-  tags= {
-    Name = var.tag_name
-  }
- }
-
+ 
 
