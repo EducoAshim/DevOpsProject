@@ -2,6 +2,12 @@ variable "aws_region" {
   description = "The AWS region to create resources"
   default     = "us-west-2"
 }
+variable "PRIVATE_KEY_PATH" {
+  default = "aws-key"
+}
+variable "PUBLIC_KEY_PATH" {
+  default = "aws-key.pem"
+}
 
 variable "key_name" {
   description = " SSH keys to connect to ec2 instance"
