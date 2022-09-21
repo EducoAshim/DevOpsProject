@@ -77,6 +77,18 @@ ingress {
   }
 }
 
+variable "key_name" {}
+
+resource "tls_private_key" "example" {
+  algorithm = "RSA"
+  rsa_bits  = 4096
+}
+
+resource "aws_key_pair" "generated_key" {
+  key_name   = "aws-key"
+  public_key = tls_private_key.example.public_key_openssh
+}
+
 # Create key pair
 #resource "aws_key_pair" "aws-key" {
 #  key_name   = "aws-key"
@@ -86,7 +98,7 @@ ingress {
 # Create AWS ec2 instance
 resource "aws_instance" "TerraEc2" {
   ami           = var.ami_id
-  key_name = "Ec2-Jenkins-linux"
+  key_name = aws_key_pair.generated_key.key_name #"Ec2-Jenkins-linux"
   instance_type = var.instance_type
   subnet_id = aws_subnet.terra-subnet-public-1.id
   vpc_security_group_ids = ["${aws_security_group.http-ssh-allowed.id}"]
@@ -105,7 +117,7 @@ provisioner "remote-exec"  {
     type         = "ssh"
     host         = "${self.public_ip}"  
     user         = "ec2-user"
-    private_key  = file("./aws_key.pem" )
+    private_key  = tls_private_key.example.private_key_pem
    }
    
    tags= {
