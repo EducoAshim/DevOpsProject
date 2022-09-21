@@ -90,9 +90,7 @@ resource "aws_instance" "TerraEc2" {
   instance_type = var.instance_type
   subnet_id = aws_subnet.terra-subnet-public-1.id
   vpc_security_group_ids = ["${aws_security_group.http-ssh-allowed.id}"]
-  tags= {
-      Name = var.tag_name
-     }
+  
   
 provisioner "remote-exec"  {
     inline  = [
@@ -105,9 +103,13 @@ provisioner "remote-exec"  {
     }
  connection {
     type         = "ssh"
-    host         = ${self.private_ip}   #["${aws_instance.TerraEc2.public_ip}"]
+    host         = ${self.private_ip}   
     user         = "ec2-user"
     private_key  = file("aws_key.pem" )
    }
+   
+   tags= {
+      Name = var.tag_name
+     }
  }
 
