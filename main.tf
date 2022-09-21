@@ -93,8 +93,7 @@ resource "aws_instance" "TerraEc2" {
   tags= {
       Name = var.tag_name
      }
-  }
-
+  
 provisioner "remote-exec"  {
     inline  = [
       "sudo yum install -y httpd.x86_64",
@@ -106,9 +105,9 @@ provisioner "remote-exec"  {
     }
  connection {
     type         = "ssh"
-    host         = ["${aws_instance.TerraEc2.public_ip}"]
+    host         = ${self.private_ip}   #["${aws_instance.TerraEc2.public_ip}"]
     user         = "ec2-user"
     private_key  = file("aws_key.pem" )
    }
- 
+ }
 
