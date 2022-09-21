@@ -9,6 +9,7 @@ resource "aws_vpc" "terravpc" {
   enable_dns_hostnames = "true"
   enable_classiclink   = "false"
   instance_tenancy     = "default"
+  name        = "terravpc"
 }
 
 
@@ -18,6 +19,7 @@ resource "aws_subnet" "terra-subnet-public-1" {
   cidr_block              = "10.0.1.0/24"
   map_public_ip_on_launch = "true" // Makes this a public subnet
   availability_zone       = "us-west-2a"
+  name        = "terrasubnet"
 }
 
 // Create internet Gateway
@@ -69,14 +71,4 @@ resource "aws_instance" "TerraEc2" {
   }
 }
 
-
-
-# Create Elastic IP address
-resource "aws_eip" "TerraEc2ip" {
-  vpc      = true
-  instance = aws_instance.TerraEc2.id
-tags= {
-    Name = "terraelastic_ip"
-  }
-}
 
