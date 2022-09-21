@@ -56,7 +56,6 @@ resource "aws_instance" "TerraEc2" {
   ami           = var.ami_id
   key_name = var.key_name
   instance_type = var.instance_type
-  security_groups= [var.security_group]
   subnet_id = aws_subnet.terra-subnet-public-1.id
   vpc_security_group_ids = ["${aws_security_group.http-ssh-allowed.id}"]
   tags= {
