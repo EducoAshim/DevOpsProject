@@ -31,7 +31,7 @@ resource "aws_route_table" "public-rt" {
   vpc_id = aws_vpc.terravpc.id
   route {
     cidr_block = "0.0.0.0/0"   //associated subnet can reach everywhere
-    gateway_id = aws_internet_gateway.prod-igw.id //CRT uses this IGW to reach internet
+    gateway_id = aws_internet_gateway.terravpc-igw.id //CRT uses this IGW to reach internet
   }
 tags = {
     Name = "public-rt"
